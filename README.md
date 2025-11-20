@@ -1,161 +1,207 @@
-To-Do App
+# To-Do App
 
-A Full Stack Todo List Application built with Go (Backend), Next.js (Frontend), and PostgreSQL (Database). This application fulfills the core and technical requirements of the Industrix Coding Challenge.
+A full-stack Todo List application built using **Go**, **Next.js**, and **PostgreSQL**.  
+This project is created to fulfill all core & technical requirements of the **Industrix Coding Challenge**.
 
-Features
+---
 
-Todo Management (CRUD): Create, Read, Update, and Delete tasks.
+## Features
 
-Categories: Create custom categories with colors and assign them to tasks.
+- **Todo Management (CRUD):** Create, view, update, and delete tasks.
+- **Todo Categories:** Create custom categories with colors and attach them to tasks.
+- **Search & Filter:** Search todos by title and filter them by category.
+- **Completion Status:** Mark tasks as completed or not completed.
+- **Responsive Design:** Mobile & desktop UI using Ant Design.
 
-Filter & Search: Filter tasks by category and search tasks by title.
+---
 
-Completion Status: Mark tasks as completed or incomplete.
+## Tech Stack
 
-Responsive Design: Mobile and desktop-friendly UI using Ant Design.
+### Backend
+- Go (Golang)
+- Gin Framework
+- GORM (ORM)
 
-Technologies
+### Frontend
+- Next.js (App Router)
+- React
+- TypeScript
+- Ant Design
 
-Backend: Go (Golang), Gin Framework, GORM (ORM).
+### Database
+- PostgreSQL
 
-Frontend: Next.js (App Router), React, TypeScript, Ant Design.
+---
 
-Database: PostgreSQL.
-
-Setup & Installation
+## Setup & Installation
 
 Follow these steps to run the application locally.
 
-Prerequisites
+---
 
-Go (v1.20+)
+## 1. Backend Setup (Go)
 
-Node.js (v18+)
+Go to the backend folder:
 
-PostgreSQL
-
-1. Setup Backend (Go)
-
-Navigate to the backend directory:
-
+```bash
 cd todo-be
+```
 
+### Environment Configuration (IMPORTANT)
 
-IMPORTANT: Environment Configuration
+1. Create a `.env` file inside the `todo-be` folder.  
+2. Copy the content of `.env.example` into `.env`.  
+3. Fill in your database password in the `DB_DSN` variable.
 
-Create a new file named .env inside the todo-be folder.
+Example `.env`:
 
-Copy the content from .env.example into .env.
-
-Fill in your actual database password in the DB_DSN variable.
-
-Example .env content:
-
+```
 DB_DSN="host=localhost user=postgres password=YOUR_ACTUAL_PASSWORD dbname=postgres port=5432 sslmode=disable"
+```
 
+### Install dependencies
 
-Install dependencies:
-
+```bash
 go mod tidy
+```
 
+### Start the server
 
-Start the server:
-
+```bash
 go run main.go
+```
 
+Backend runs on:
 
-The server will run on http://localhost:8080.
+```
+http://localhost:8080
+```
 
-2. Setup Frontend (Next.js)
+---
 
-Open a new terminal and navigate to the frontend directory:
+## 2. Frontend Setup (Next.js)
 
+Go to the frontend folder:
+
+```bash
 cd todo-fe
-
+```
 
 Install dependencies:
 
+```bash
 npm install
-
+```
 
 Start the development server:
 
+```bash
 npm run dev
+```
 
+Frontend runs at:
 
-Open your browser at http://localhost:3000.
+```
+http://localhost:3000
+```
 
-Project Structure
+---
 
-Here is the folder structure of this project:
+## Project Structure
 
+```
 SUBMISSION-CBR/
-├── todo-be/               # Backend Folder (Go)
-│   ├── models/            # Data Structure Definitions (Schema)
-│   │   ├── category.go    # Category Model
-│   │   └── todo.go        # Todo Model
-│   ├── go.mod             # Go Module & Dependencies
-│   ├── go.sum             # Dependency Checksums
-│   ├── main.go            # Server Entry Point & API Routes
-│   └── .env               # Environment Variables (Not committed to Git)
+├── todo-be/                 # Backend (Go)
+│   ├── models/              # Schema & Model
+│   │   ├── category.go
+│   │   └── todo.go
+│   ├── go.mod
+│   ├── go.sum
+│   ├── main.go              # Entry point & routing
+│   └── .env                 # Environment variables
 │
-└── todo-fe/               # Frontend Folder (Next.js)
-    ├── app/               # Next.js App Router
-    │   ├── globals.css    # Global Styles
-    │   ├── layout.tsx     # Main Layout & Antd Registry
-    │   └── page.tsx       # Main Page (UI & Logic)
-    ├── public/            # Static Assets
-    ├── .gitignore         # Git Ignore Configuration
-    ├── next.config.ts     # Next.js Configuration
-    ├── package.json       # Frontend Dependencies
-    ├── tailwind.config.ts # (If using Tailwind)
-    └── tsconfig.json      # TypeScript Configuration
+└── todo-fe/                 # Frontend (Next.js)
+    ├── app/
+    │   ├── globals.css
+    │   ├── layout.tsx
+    │   └── page.tsx
+    ├── public/
+    ├── .gitignore
+    ├── next.config.ts
+    ├── package.json
+    ├── tailwind.config.ts
+    └── tsconfig.json
+```
 
+---
 
-Technical Q&A
+## Technical Q&A
 
-Database Design
+### Database Design
 
-1. What database tables did you create and why?
-I created two main tables: todos and categories.
+#### 1. What tables were created and why?
 
-categories: Stores category information (id, name, color).
+I created two main tables:
 
-todos: Stores task data (id, title, description, status, priority) and includes a Foreign Key category_id linking to the categories table.
-This structure was chosen to efficiently represent a One-to-Many relationship: a single category can be associated with multiple tasks.
+- **categories** — Stores category data (id, name, color)
+- **todos** — Stores todo data (id, title, description, status, priority, category_id)
 
-2. How did you handle pagination and filtering in the database?
+The structure represents a **One-to-Many** relationship:  
+**one category can contain many todos**.
 
-Filtering: Implemented using SQL WHERE clauses via GORM. For title search, I used ILIKE for case-insensitive matching (title ILIKE %keyword%). For categories, exact matching is used (category_id = ?).
+---
 
-Pagination: The backend supports pagination logic using Limit and Offset in database queries (although the current frontend fetches all data for simplicity given the small dataset).
+#### 2. How are pagination & filtering implemented?
 
-Technical Decisions
+- **Filtering:**
+  - Title search uses `ILIKE` (case-insensitive)
+  - Category filter uses `category_id`
 
-1. How did you implement responsive design?
-I utilized Ant Design components which are responsive out-of-the-box. For the data table, I enabled the scroll={{ x: true }} property to allow horizontal scrolling on smaller screens without breaking the main layout. The overall layout uses Flexbox for responsive alignment.
+- **Pagination:**
+  - Supports `Limit` and `Offset` using GORM
+  - Frontend currently fetches all data since dataset is small
 
-2. What backend architecture did you choose?
-I chose a simple Monolithic architecture with clear separation of concerns:
+---
 
-models: Defines data structures and database schemas in a separate folder.
+## Technical Decisions
 
-main.go: Serves as the entry point, handling database connections, migrations, and API routing (Controllers).
-This approach was selected for its simplicity and development speed suitable for the scale of this application, while remaining structured and easy to understand.
+### 1. Responsive Design Implementation
 
-3. How did you handle data validation?
-Data validation is handled on both ends:
+- Used Ant Design components which are already responsive.
+- Added horizontal scroll to tables:
 
-Frontend: Uses Ant Design Form rules (rules={[{ required: true }]}) to provide instant feedback to the user.
+```tsx
+scroll={{ x: true }}
+```
 
-Backend: Uses Gin's ShouldBindJSON to ensure the received data matches the expected Go structs before processing.
+- Flexbox-based layout ensures stable responsiveness.
 
-Testing & Quality
+---
 
-If you had more time, what would you improve?
+### 2. Backend Architecture
 
-Add Unit Tests for the backend using Go's built-in testing package.
+A simple monolithic structure:
 
-Implement React Context or Redux for centralized state management.
+- `models/` folder contains schemas and structs  
+- `main.go` handles routing, database connection, and migration  
 
-Add user authentication features.
+This structure was chosen for clarity, maintainability, and simplicity.
+
+---
+
+### 3. Data Validation
+
+- **Frontend:** Ant Design Form Rules (`{ required: true }`)
+- **Backend:** Gin’s `ShouldBindJSON` for input validation based on struct definitions
+
+---
+
+## Testing & Improvements
+
+### If given more time, what would you improve?
+
+- Add backend unit tests
+- Use React Context or Redux for state management
+- Add user authentication
+
+---
