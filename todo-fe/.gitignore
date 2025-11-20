@@ -1,0 +1,15 @@
+node_modules/
+
+.env
+*.env
+
+.next/
+out/
+
+todo-be/todo-app.exe
+todo-be/todo-app
+todo-be/tmp/
+
+logs/
+*.log
+.DS_Store
