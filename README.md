@@ -111,16 +111,16 @@ http://localhost:3000
 
 ```
 SUBMISSION-CBR/
-├── todo-be/                 # Backend (Go)
-│   ├── models/              # Schema & Model
+├── todo-be/
+│   ├── models/              
 │   │   ├── category.go
 │   │   └── todo.go
 │   ├── go.mod
 │   ├── go.sum
-│   ├── main.go              # Entry point & routing
-│   └── .env                 # Environment variables
+│   ├── main.go            
+│   └── .env                
 │
-└── todo-fe/                 # Frontend (Next.js)
+└── todo-fe/                 
     ├── app/
     │   ├── globals.css
     │   ├── layout.tsx
