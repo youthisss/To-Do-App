@@ -4,9 +4,9 @@ A full-stack Todo List application built using **Go**, **Next.js**, and **Postgr
 This project is created to fulfill all core & technical requirements of the **Industrix Coding Challenge**.
 
 
-Name: Fanny Rizqi Yudhistira
+**Name**: Fanny Rizqi Yudhistira
 
-Domicile: Padurenan, Mustikajaya, Bekasi City, West Java
+**Domicile**: Padurenan, Mustikajaya, Bekasi City, West Java
 
 ---
 
